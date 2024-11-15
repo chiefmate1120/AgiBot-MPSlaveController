@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <GVL Name="GVL_InstruCtrlParams" Id="{f4067b3b-1600-41bf-bbfc-2a09113afeea}">
     <Declaration><![CDATA[// NOTICE： Use m_instruTypeIdx in FB_Instrument as the array index to get data below
 {attribute 'global_init_slot' := '49991'}
@@ -13,6 +13,7 @@ VAR_GLOBAL CONSTANT
 	
 	// instrument name
 	g_instruNullName :STRING := 'NULL';
+	g_instruTotalLife : ARRAY[1..g_instruTypesNum] OF UINT := [11(20),100,1,1];
 	g_instruNameString:ARRAY[1..g_instruTypesNum] OF STRING:=['Cadiere Forceps','Large Needle Driver','Mega SutureCut Needle Driver','Large SutureCut Needle Driver',	
 															'RoundTip Scissors','Prograsp',	'Maryland Bipolar Forceps','Fenestrated Bipolar Forceps', 'Monopolar Curved Scissors',
 															'Permanent Cautery Hook','Permanent Cautery Spatula','Camera','Ultrasonic Scalpel 45cm','Ultrasonic Scalpel 55cm'];
@@ -20,9 +21,9 @@ VAR_GLOBAL CONSTANT
 	g_instruNameStringCH:ARRAY[1..g_instruTypesNum] OF WSTRING:=["无创抓钳","持针钳","大号带剪刀持针钳","带剪刀持针钳","圆头直剪","细齿无创抓钳",
 															"双极弧形电凝钳","双极鸭嘴电凝钳","单极弧剪","单极电钩", "单极电铲","内窥镜","超声刀 46cm","超声刀 55cm"];
 	// instrument kinematic
-	g_instruRodLength :ARRAY[1..g_instruTypesNum] OF LREAL :=[0.5438,0.5438,0.5438,0.5438, 0.5438,0.5438,0.5438,0.5438,0.5438,	0.5432, 0.5432,0.49,0.46463,0.55225];
-	g_instruHeadLength :ARRAY[1..g_instruTypesNum] OF LREAL :=[ 0.0089,0.0089,0.010,0.010,	0.0089,0.01065,0.01065,0.01065,0.0091,	0.00935,0.00935, 0, 0, 0];
-	g_instruFingerLength :ARRAY[1..g_instruTypesNum] OF LREAL :=[0.01950, 0.0096, 0.0109, 0.011,	0.01102, 0.02313, 0.0195, 0.0207, 0.0130, 0.01638, 0.01638, 0, 0, 0];
+	g_instruRodLength :ARRAY[1..g_instruTypesNum] OF LREAL :=[	0.5438,0.5438,0.5438,0.5438,	 0.5438,0.5438,0.5438, 0.5438,0.5438,	0.5432, 0.5432,0.49,0.46463,0.55225];
+	g_instruHeadLength :ARRAY[1..g_instruTypesNum] OF LREAL :=[ 0.0089,0.0089,0.010,0.010,		 0.0089,0.01065,0.01065,0.01065,0.0091,	0.00935,0.00935, 0, 0, 0];
+	g_instruFingerLength :ARRAY[1..g_instruTypesNum] OF LREAL :=[0.01950, 0.0096, 0.0109, 0.011, 0.01102, 0.02313, 0.019473, 0.0207, 0.01293, 0.01638, 0.01905, 0, 0, 0];
 
 	k13:ARRAY[1..g_instruTypesNum] OF LREAL:=[0.775510204, 0.808510638, 0.590163934, 0.590163934,  0.791666667,  0.496732026, 0.590163934, 0.590163934, 0.75,   -0.663636364,	-0.663636364,   1, 1, 1];
 	k23:ARRAY[1..g_instruTypesNum] OF LREAL:=[0.775510204,0.808510638, 0.590163934, 0.590163934,  0.791666667, 0.496732026, 0.590163934, 0.590163934,  0.75,   -0.663636364,	-0.663636364,   1, 1, 1];

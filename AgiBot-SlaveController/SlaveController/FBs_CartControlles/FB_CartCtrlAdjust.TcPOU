@@ -89,11 +89,12 @@ IF m_adjustStartTime > m_cartAdjustStartWaitTime THEN
 	m_trajJntPos[6] := atan2( m_tarCartPos[6], m_tarCartPos[7]);
 	m_trajJntPos[7] := m_tarCartPos[7]/COS(m_trajJntPos[6]) - GVL_CartControlParameters.g_curBeamStretchJntInitPos;
 	m_trajJntPos[8] := m_tarCartPos[8] -  (m_trajJntPos[6] - m_initActJntPos[6]);
-	m_jntPosReachLimit := calcCmdReachLimit();
+	
 	m_jntEnableFlag := faultDetect(i_slaveCart.curJntPos);
+	m_jntPosReachLimit := calcCmdReachLimit();
 	FOR i := 5 TO 8 DO 
 		m_tarJntPos[i] := LIMIT(GVL_CartMotorParameters.g_minJntPos[i] + m_carJntSoftwareLimit[i], m_trajJntPos[i], GVL_CartMotorParameters.g_maxJntPos[i] - m_carJntSoftwareLimit[i]) ;
-		m_jntOTG[i].run(i_targetPos:= m_trajJntPos[i], i_targetVel:= 0.0, o_cmdAcc=> , o_cmdVel=> , o_cmdPos=>m_cmdJntPos[i] );
+		m_jntOTG[i].run(i_targetPos:= m_tarJntPos[i], i_targetVel:= 0.0, o_cmdAcc=> , o_cmdVel=> , o_cmdPos=>m_cmdJntPos[i] );
 	END_FOR
 END_IF]]></ST>
       </Implementation>
@@ -139,12 +140,19 @@ faultDetect[7] := BOOL_TO_INT( NOT SafetyCheck.m_safetyCheckData.m_cartAdjustErr
 faultDetect[8] := BOOL_TO_INT( NOT SafetyCheck.m_safetyCheckData.m_cartAdjustErr);
 
 IF SafetyCheck.m_safetyCheckData.m_cartStandColumnErr THEN
-	m_trajJntPos[5] :=curJntPos[5];
+	m_tarPosInc[5] := 0;
+	m_initActJntPos[5]:=curJntPos[5];
+	
 END_IF
 IF SafetyCheck.m_safetyCheckData.m_cartAdjustErr THEN
-	m_trajJntPos[6] :=curJntPos[6];
-	m_trajJntPos[7] :=curJntPos[7];
-	m_trajJntPos[8] :=curJntPos[8];
+	m_initActJntPos[6] :=curJntPos[6];
+	m_initActJntPos[7] :=curJntPos[7];
+	m_initActJntPos[8] :=curJntPos[8];
+	m_tarPosInc[6] := 0;
+	m_tarPosInc[7] := 0;
+	m_tarPosInc[8] := 0;
+	m_initActCartPos[6] := (m_initActJntPos[7] + GVL_CartControlParameters.g_curBeamStretchJntInitPos) * SIN(m_initActJntPos[6]);
+	m_initActCartPos[7] := (m_initActJntPos[7] + GVL_CartControlParameters.g_curBeamStretchJntInitPos) * COS(m_initActJntPos[6]);
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -217,7 +225,10 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_CartCtrlAdjust.calcCmdJntPos">
       <LineId Id="123" Count="4" />
-      <LineId Id="129" Count="31" />
+      <LineId Id="129" Count="26" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="157" Count="3" />
       <LineId Id="14" Count="0" />
     </LineIds>
     <LineIds Name="FB_CartCtrlAdjust.calcCmdReachLimit">
@@ -229,10 +240,14 @@ END_VAR
       <LineId Id="2" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="10" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="30" Count="0" />
       <LineId Id="12" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="16" Count="1" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="31" Count="1" />
       <LineId Id="15" Count="0" />
     </LineIds>
     <LineIds Name="FB_CartCtrlAdjust.init">

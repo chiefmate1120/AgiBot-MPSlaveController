@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="FB_SlaveRobot" Id="{8cbdb2ba-9735-46e3-8cbc-296330acc8cc}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_SlaveRobot
 VAR_INPUT
@@ -155,7 +155,7 @@ FOR i:=1 TO g_sArmNum DO
 	r_slaveJointsData.m_curLinkPos[i]:=m_slaveArms[i].curLinkPos;
 	r_slaveJointsData.m_curJntPos[i]:=m_slaveArms[i].curJntPos;
 	r_slaveJointsData.m_curJntVel[i]:=m_slaveArms[i].curJntVel;
-	
+	r_slaveJointsData.m_rawJntCurrent[i] := m_slaveArms[i].rawJntCurrent;
 	// command info
 	// cartesion
 	r_slaveStatus.m_cmdArmPose[i]:=m_slaveArms[i].cmdCartPose;

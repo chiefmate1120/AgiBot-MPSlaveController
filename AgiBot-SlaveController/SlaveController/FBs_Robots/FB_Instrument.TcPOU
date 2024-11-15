@@ -16,7 +16,7 @@ VAR
 	m_instruNameCH : WSTRING;
 	
 	// instrument type index, which is used to get relative parameters from global variable arrays
-	m_instruTypeIdx :INT:=0;
+	m_instruTypeIdx :INT:=1;
 	
 	// flag if instrument is singer finger
 	m_isSingleFinger:BOOL:= FALSE;
@@ -39,6 +39,9 @@ VAR
 	
 	//The state and parameters readed from the instrument
 	m_onChipData:ST_InstruOnChipData;
+	
+	//instrument total number of use
+	m_instruTotalUse : UINT;
 	
 	// instrument kinematic parameters
 	m_kinematicParameters:ST_InstruKinematicParam; 
@@ -79,7 +82,7 @@ VAR
 	m_signL1,m_signL2,m_signL3:UDINT;
 	m_UsageReadResult:ULINT;
 	m_InstruUsageToLED:ULINT;
-	m_InstruSeriesRecord:ARRAY [1..100] OF ULINT;
+	
 	m_HaveRecord:BOOL;
 	m_SdoWrite:FB_EcCoESdoWrite;
 	m_SdoRead:FB_EcCoESdoRead;
@@ -128,6 +131,7 @@ END_IF
 m_instruType := m_onChipData.m_InstruID;
 m_instruName :=GVL_InstruCtrlParams.g_instruNameString[m_instruTypeIdx];
 m_instruNameCH := GVL_InstruCtrlParams.g_instruNameStringCH[m_instruTypeIdx];
+m_instruTotalUse := GVL_InstruCtrlParams.g_instruTotalLife[m_instruTypeIdx];
 
 // check if instrument has one finger
 m_isSingleFinger :=  (m_instruType = InstruType_CauteryHook OR  m_instruType = InstruType_CauterySpatula );
@@ -849,9 +853,9 @@ CASE m_Step OF
 		END_IF
 		
 	110://处理当器械使用次数达到上限后、在同一场手术中还能使用
-		IF m_onChipData.m_InstruusageCounts=m_onChipData.m_InstrumaxUsageCounts THEN		
+		IF m_onChipData.m_InstruusageCounts=(m_onChipData.m_InstrumaxUsageCounts -1) THEN		
 			//TODO: check this part
-			m_InstruSeriesRecord:=InstruIDRecord(i_NewValue:= m_onChipData.m_InstruusageCounts, i_ArrayData:= m_InstruSeriesRecord);
+			GVL_interactUI.g_InstruSeriesRecord:=InstruIDRecord(i_NewValue:= m_onChipData.m_InstruseriesNum, i_ArrayData:= GVL_interactUI.g_InstruSeriesRecord);
 		END_IF
 		m_Step:=120;
 		
@@ -868,12 +872,12 @@ CASE m_Step OF
 			m_onChipData.m_Error:=TRUE;
 			m_onChipData.m_ErrorID:=3;
 			
-		ELSIF m_onChipData.m_InstruusageCounts>m_onChipData.m_InstrumaxUsageCounts AND m_onChipData.m_InstruID<>20 THEN
-			m_HaveRecord:=InstruSreiesFind(i_NewValue:=m_onChipData.m_InstruseriesNum , i_ArrayData:=m_InstruSeriesRecord );
+		ELSIF m_onChipData.m_InstruusageCounts>(m_onChipData.m_InstrumaxUsageCounts -1) AND m_onChipData.m_InstruID<>InstruType_Endoscope THEN
+			m_HaveRecord:=InstruSreiesFind(i_NewValue:=m_onChipData.m_InstruseriesNum , i_ArrayData:=GVL_interactUI.g_InstruSeriesRecord );
 			IF m_HaveRecord THEN
 				//
 			ELSE
-				m_onChipData.m_InstruReadSucceed := FALSE;
+				m_onChipData.m_InstruReadSucceed := FALSE; 
 				m_onChipData.m_Error:=TRUE;
 				m_onChipData.m_ErrorID:=2;
 			END_IF
@@ -1134,7 +1138,9 @@ o_q1 := g_2pi *  posCode/16#3FF;
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_Instrument.checkInstruType">
-      <LineId Id="337" Count="58" />
+      <LineId Id="337" Count="19" />
+      <LineId Id="402" Count="0" />
+      <LineId Id="357" Count="38" />
       <LineId Id="18" Count="0" />
     </LineIds>
     <LineIds Name="FB_Instrument.curScopePosture.Get">

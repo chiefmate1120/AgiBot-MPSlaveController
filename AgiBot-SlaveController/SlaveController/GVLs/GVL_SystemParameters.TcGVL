@@ -26,9 +26,9 @@
 	g_cartCtrlFreq :LREAL := 1.0/g_cartCtrlCycleTime;
 	
 	// wait time before robot init  for ethercat to stablize 
-	g_robotInitWaitTime : LREAL := 5.0;
+	g_robotInitWaitTime : LREAL := 10.0;
 
-	g_robotSafetyCheckWaitTime : LREAL :=6.0;
+	g_robotSafetyCheckWaitTime : LREAL :=10.1;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

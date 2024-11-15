@@ -11,6 +11,8 @@ VAR
 	m_cartMotorOutput AT %Q*	:ST_CartMotorOutput;
 	
 	m_cartMotorVelSongxia AT %I*  : DINT;
+	
+	m_cartMotorTorqueSX AT %I*  : INT;
 
 	m_cmdAcc:LREAL;
 	

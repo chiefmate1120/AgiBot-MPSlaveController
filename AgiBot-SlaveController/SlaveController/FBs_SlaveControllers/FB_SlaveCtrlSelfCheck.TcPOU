@@ -86,14 +86,23 @@ END_VAR
 VAR
 	i,j :INT;
 	startJntPos,endJntPos :Vec8d;
+	baseJntPos:Vec8d;
+	cycleNum :LREAL;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[SUPER^.Init(i_slaveArm,r_slaveArmCtrlCmd);
-m_jntEnableFlag :=g_zeroVec8i;
+//m_jntEnableFlag :=g_zeroVec8i;
 
 //set different wait time for each arm, so the arms would run self-check successively
 m_enableWaitTime := i_slaveArm.armIdx-1;
+
+// determine base joint position for instrument joint
+baseJntPos :=g_zeroVec8d;
+FOR i:=4 TO g_sJntNum DO
+	cycleNum := FLOOR(i_slaveArm.curJntPos[i]/g_2pi);
+	baseJntPos[i]:=cycleNum* g_2Pi;
+END_FOR
 
 // traj plan
 // fisrt segment
@@ -102,7 +111,7 @@ m_selfCheckTrajIdx :=1;
 startJntPos:=i_slaveArm.curJntPos;
 endJntPos:=startJntPos;
 FOR j:=3 TO g_sJntNum DO 
-	endJntPos[j]:=m_selfCheckPosture[1,j];
+	endJntPos[j]:=baseJntPos[j]+m_selfCheckPosture[1,j];
 END_FOR
 m_slefCheckPlanner[1].init(startJntPos,endJntPos,m_selfCheckMaxjntVel, m_selfCheckMaxjntAcc,m_selfCheckMaxjntJerk);
 
@@ -110,8 +119,8 @@ m_slefCheckPlanner[1].init(startJntPos,endJntPos,m_selfCheckMaxjntVel, m_selfChe
 IF m_selfCheckMotionNum>= 2 THEN
 	FOR i:=2 TO m_selfCheckMotionNum DO 
 		FOR j:=1 TO 7 DO 
-			startJntPos[j]:=m_selfCheckPosture[i-1,j];
-			endJntPos[j]:=m_selfCheckPosture[i,j];
+			startJntPos[j]:=baseJntPos[j]+m_selfCheckPosture[i-1,j];
+			endJntPos[j]:=baseJntPos[j]+m_selfCheckPosture[i,j];
 		END_FOR
 		m_slefCheckPlanner[i].init(startJntPos,endJntPos,m_selfCheckMaxjntVel, m_selfCheckMaxjntAcc,m_selfCheckMaxjntJerk);
 	END_FOR
@@ -151,6 +160,12 @@ copyCmds(r_slaveArmCtrlCmd);]]></ST>
       <LineId Id="57" Count="0" />
       <LineId Id="218" Count="0" />
       <LineId Id="199" Count="2" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="232" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="234" Count="1" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="236" Count="0" />
       <LineId Id="121" Count="0" />
       <LineId Id="70" Count="0" />
       <LineId Id="138" Count="0" />

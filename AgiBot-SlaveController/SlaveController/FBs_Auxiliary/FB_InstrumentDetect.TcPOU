@@ -23,9 +23,9 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[//Instrument single   At installation--2#0*0*   not installation --2#1*1*  And Hall single --2#100 0000
-IF (IOValue AND 10#09) = 0  THEN
+IF (IOValue AND 10#73) = 64  THEN
 	m_instruOnCounts := MIN( m_instruOnCounts +1,m_InstruOnCountThres);
-ELSIF (IOValue AND 10#09) = 9  THEN
+ELSIF (IOValue AND 10#73) = 9  THEN
 	m_instruOnCounts :=0;
 END_IF
 run := m_instruOnCounts >= m_InstruOnCountThres;]]></ST>

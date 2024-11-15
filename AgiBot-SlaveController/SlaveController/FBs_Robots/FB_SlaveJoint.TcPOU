@@ -40,8 +40,10 @@ IF m_armIdx =3 THEN
 ELSE
 	m_linkEncoderRes :=GVL_SlaveMotorParameters.g_absEncoderRes[i_jntIdx];
 	m_linkEncoderDir :=GVL_SlaveJointEncoderCaliData.g_asbEncoderDir[i_jntIdx];
+
 	m_linkEncLimitBuffer := GVL_SlaveJointEncoderCaliData.g_linkEncLimitBuffer[i_jntIdx];
 END_IF
+
 
 // hardware parameters
 m_motorEncoderRes :=GVL_SlaveMotorParameters.g_incEncoderRes[i_jntIdx];
@@ -180,9 +182,12 @@ END_IF
       <LineId Id="166" Count="0" />
       <LineId Id="208" Count="3" />
       <LineId Id="224" Count="0" />
-      <LineId Id="212" Count="2" />
+      <LineId Id="212" Count="1" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="243" Count="0" />
       <LineId Id="225" Count="0" />
       <LineId Id="207" Count="0" />
+      <LineId Id="235" Count="0" />
       <LineId Id="156" Count="0" />
       <LineId Id="89" Count="7" />
       <LineId Id="98" Count="3" />

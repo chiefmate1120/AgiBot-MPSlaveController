@@ -19,7 +19,7 @@ VAR_GLOBAL CONSTANT
 	g_driveErrWord : UDINT:=32;
 	
 	// arm joint safety error
-	g_safetyJntVel : vec13d:=[2(g_largeNum), 1.0, pi, pi, pi, pi, 0.6, 5(4*pi)];
+	g_safetyJntVel : vec13d:=[2(g_largeNum), 1.0, pi, pi, pi, pi, 0.75, 5(4*pi)];
 	
 	// joint limit buffer(outside of joint limit)
 	g_armJntPosLimitBuffer :vec13d:=[10.0*g_deg2Rad,2(0.05),4(10.0*g_deg2Rad), 0.05, 5(0)];
@@ -35,7 +35,7 @@ VAR_GLOBAL CONSTANT
 														(-40+50)*g_deg2Rad,  0.779,      0.200, 4.5579,    1.6,  170*g_deg2Rad,	1.5-pi/2, 	0.58, 5(g_largeNum)];	
 	
 	//arm joint max current
-	g_maxJntCurrent : vec13d:=[2(g_largeNum),8400,7600,8400,      8400,8400,      1500,300,300,300,300, 300];
+	g_maxJntCurrent : vec13d:=[2(g_largeNum),8000,3800,5600, 5600,5600,  1300,300,300,300,300, 300];
 	
 	// rcp position deviation for safety check
 	g_rcpDeviationThres :LREAL := 0.005;

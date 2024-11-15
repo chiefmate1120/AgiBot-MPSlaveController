@@ -6,30 +6,30 @@
 VAR_GLOBAL CONSTANT	
 	// absolute encoder value at minimal joint positon
 	g_minLinkEncoder :ARRAY[1..g_sArmNum, 1..g_sJntNum] OF DINT :=
-		[15026800, 7686890, 24511, 0, 0, 0, 0, 0,
-		 10489100, 4588800, 10330, 0, 0, 0, 0, 0,
-		35  , 85624, 57700, 0, 0, 0, 0, 0,
-		 6116900,  5078766,61396 , 0, 0, 0, 0, 0];
+		[15026800, 7686890, 28333, 0, 0, 0, 0, 0,
+		 10489100, 4588800, 59382, 0, 0, 0, 0, 0,
+		35  , 85624, 950, 0, 0, 0, 0, 0,
+		 6116900,  5078766,25850 , 0, 0, 0, 0, 0];
 		 
 	// absolute encoder value at maximum joint positon
 	g_maxLinkEncoder :ARRAY[1..g_sArmNum, 1..g_sJntNum] OF DINT :=
-		[13899866 , 276216, 46808, 0, 0, 0, 0, 0,
-		 9367400, 12196650, 53080 , 0, 0, 0, 0, 0,
-		  8803  , 14040, 14555, 0, 0, 0, 0, 0,
-		 4991310,  12616170,18239, 0, 0, 0, 0, 0];
+		[13899866 , 276216, 1234, 0, 0, 0, 0, 0,
+		 9367400, 12196650, 32388 , 0, 0, 0, 0, 0,
+		  8803  , 14040, 39535, 0, 0, 0, 0, 0,
+		 4991310,  12616170,64475, 0, 0, 0, 0, 0];
 	
 	// absolute encoder value at calibrated positon
 	g_caliLinkEncoder :ARRAY[1..g_sArmNum, 1..g_sJntNum] OF DINT :=
-		[6048200, 4849470, 46808, 46180 , 6018 , 49928 , 23680 , 34680, 
-		 1548800, 9172500, 10330, 57272 , 13688 , 48750 , 43310 , 13951 ,
-		  69906, 107792, 14555, 17188 , 38930,  40400,  35192, 5020 ,
-		 13906777,  9940888, 18192 , 45120,  52590,  52590,  64913,  38950];
+		[6048200, 4849470, 1234, 46090,  39450,  50354, 56490, 34850, 
+		 1548800, 9172500, 32388,16741,  38985,  8500,   2080,   38970,//24423,  13270,  16614,  10240,  46520 ,
+		  69906, 107792, 39535, 45280,  52677,  20656,  31830,  4737,//16741,  38985,  8500,   2080,   38970,
+		 13906777,  9940888, 64475 ,24423,  13270,  16614,  10240,  46520 ];//45280,  52677,  20656,  31830,  4737
 	
 	 // if absolute encoder value cross zeros within joint motion range
 	 // NOTICE: joint 7 is always 0.
 	g_linkEncZeroCross :ARRAY[1..g_sArmNum, 1..g_sJntNum] OF INT :=
 		[1, 0, 1, 1, 1, 1, 1, 1,
-		 1, 0, 0, 1, 1, 1, 1, 1,
+		 1, 0, 1, 1, 1, 1, 1, 1,
 		 1, 1, 0, 1, 1, 1, 1, 1,
 		 1, 0, 0, 1, 1, 1, 1, 1];
 		 
@@ -47,8 +47,9 @@ VAR_GLOBAL CONSTANT
 	g_linkEncLimitBufferFR :ARRAY [1..g_sJntNum] OF DINT := [2(1000),6(1000)];
 	
 	// absolute encoder direction
-	g_asbEncoderDir :ARRAY[1..g_sJntNum] OF INT :=[1, -1, -1, -1, -1, -1, -1, -1];
-	g_asbEncoderDirFR :ARRAY[1..g_sJntNum] OF INT :=[-1, 1, -1, -1, -1, -1, -1, -1];
+	g_asbEncoderDir :ARRAY[1..g_sJntNum] OF INT :=[1, -1, 1, -1, -1, -1, -1, -1];
+	//g_asbEncoderDirArm1 :ARRAY[1..g_sJntNum] OF INT :=[1, -1, 1, -1, -1, -1, -1, -1];
+	g_asbEncoderDirFR :ARRAY[1..g_sJntNum] OF INT :=[-1, 1, 1, -1, -1, -1, -1, -1];
 	
 	// flag if joint can rotate multiple cycles
 	g_multipleCyclesJoint :ARRAY[1..g_sArmNum, 1..g_sJntNum] OF INT :=

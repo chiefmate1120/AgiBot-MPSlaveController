@@ -26,7 +26,7 @@ STRUCT
 	m_instruID : UINT;
 	
 	//instrument total number
-	m_instruTotalLife : UINT := 100;
+	m_instruTotalLife : UINT := 20;
 	
 	//instrument use life (ui write)
 	m_useLifeUi : UINT;

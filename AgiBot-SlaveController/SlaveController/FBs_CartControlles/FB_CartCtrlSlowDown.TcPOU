@@ -51,7 +51,9 @@ FOR i := 5 TO 8 BY 1 DO
 	m_cmdJntPos[i] := m_initPos[i] + m_tarPosInc[i];
 END_FOR
 
-IF m_incSlowStopTime >= m_slowStopTime THEN//m_slowStopTime THEN
+IF m_incSlowStopTime >= m_slowStopTime AND (m_jntEnableFlag[5] = 1 OR m_jntEnableFlag[6]=1 OR m_jntEnableFlag[7] = 1 OR m_jntEnableFlag[8] =1) THEN//m_slowStopTime THEN
+	m_isFinished := TRUE;
+ELSIF m_incSlowStopTime >= 1THEN
 	m_isFinished := TRUE;
 END_IF]]></ST>
       </Implementation>
@@ -79,7 +81,7 @@ FOR i := 3 TO 4 BY 1 DO
 	m_cmdJntVel[i] := LIMIT(-GVL_CartControlParameters.g_maxJntVel[i], m_trajVel[i]  , GVL_CartControlParameters.g_maxJntVel[i]);
 END_FOR
 
-IF m_incSlowStopTime >= m_slowStopTime THEN//m_slowStopTime THEN
+IF m_incSlowStopTime >= 1.0 AND (m_jntEnableFlag[3] = 1 OR m_jntEnableFlag[4]=1) THEN//m_slowStopTime THEN
 	m_isFinished := TRUE;
 END_IF]]></ST>
       </Implementation>
@@ -132,8 +134,8 @@ m_initVel[6] := LIMIT(-GVL_CartControlParameters.g_maxJntVel[6], i_slaveCart.cur
 m_initVel[7] := LIMIT(-GVL_CartControlParameters.g_maxJntVel[7], i_slaveCart.curJntVel[7], GVL_CartControlParameters.g_maxJntVel[7]);
 m_initVel[8] := LIMIT(-GVL_CartControlParameters.g_maxJntVel[8], i_slaveCart.curJntVel[8], GVL_CartControlParameters.g_maxJntVel[8]);
 
-m_initDec[3] := m_initVel[3]*2;
-m_initDec[4] := m_initVel[4]*2;
+m_initDec[3] := m_initVel[3];
+m_initDec[4] := m_initVel[4];
 m_initDec[5] := sign(m_initVel[5])*GVL_CartControlParameters.g_maxJntVel[5]*2;
 m_initDec[6] := sign(m_initVel[6])*GVL_CartControlParameters.g_maxJntVel[6]*2;
 m_initDec[7] := sign(m_initVel[7])*GVL_CartControlParameters.g_maxJntVel[7]*2;
@@ -159,7 +161,7 @@ copyCmds(r_cartCtrlCmd);]]></ST>
       <LineId Id="75" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="92" Count="0" />
-      <LineId Id="78" Count="0" />
+      <LineId Id="114" Count="2" />
       <LineId Id="71" Count="0" />
     </LineIds>
     <LineIds Name="FB_CartCtrlSlowDown.calcCmdJntVel">

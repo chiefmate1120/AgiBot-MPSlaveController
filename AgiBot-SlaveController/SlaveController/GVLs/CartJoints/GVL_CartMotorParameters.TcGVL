@@ -6,7 +6,7 @@
 VAR_GLOBAL CONSTANT
 	// encoder resolution
 	//TODO: resolution of joint 2/3 need verification
-	g_incEncoderRes :ARRAY[1..g_cartJntNum] OF DINT :=[2(65536), 8388608, 8388608, 8388608, 3(65536)];
+	g_incEncoderRes :ARRAY[1..g_cartJntNum] OF DINT :=[2(65536), 8192, 8192, 8192, 3(65536)];
 	g_absEncoderRes :ARRAY[1..g_cartJntNum] OF DINT :=[1, 1, 1, 1, 8192, 131072, 8192,131072];
 	
 	// reduction ratio

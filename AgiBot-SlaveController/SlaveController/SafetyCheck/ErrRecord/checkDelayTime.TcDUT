@@ -20,13 +20,15 @@ STRUCT
 	//joint vel error delay time
 	Ti_jntVelErr:TIME:=T#0.05S;
 	//joint current error  delay time
-	Ti_jntCurrentErr:TIME:=T#0.1S;
+	Ti_jntCurrentErr:TIME:=T#3S;
 	//fixed point postion change of  master-slave state 
 	Ti_fixedPointErr:TIME:=T#0.1S;
 	//space pose error  delay time
 	Ti_spacePoseErr:TIME:=T#0.1S;
 	//commend joint position saltation delay time
 	Ti_jntCmdSaltationErr:TIME:=T#0.002S;
+	//Deviation between command current and feedback current
+	Ti_jntCmdCurrentErr:TIME:=T#0.2S;
 
 	
 	Ti_CarDualEncDev:TIME:=T#0.02S;

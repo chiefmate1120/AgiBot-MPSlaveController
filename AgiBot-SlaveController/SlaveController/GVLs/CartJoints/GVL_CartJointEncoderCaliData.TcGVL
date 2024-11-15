@@ -18,7 +18,7 @@ VAR_GLOBAL
 		 
 
 	// abolute encoder expanded limit buffer in case there is calibrtion error at limit position
-	g_linkEncLimitBuffer : DINT := 100000;
+	g_linkEncLimitBuffer : DINT := 1000;
 
 	// absolute encoder direction
 	g_asbEncoderDir :ARRAY[1..g_cartJntNum] OF INT :=[1, 1, 1, 1, -1, 1, -1, -1];

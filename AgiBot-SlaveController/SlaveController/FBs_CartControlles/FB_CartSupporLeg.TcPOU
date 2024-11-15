@@ -45,7 +45,7 @@ m_adjustStartTime :=LIMIT(0, m_adjustStartTime + g_cartCtrlCycleTime, 2);
 m_actJntPos := i_slaveCart.curJntPos;
 IF m_adjustStartTime > m_cartAdjustStartWaitTime THEN
 	FOR i:=1 TO 2 DO
-		IF ABS(i_slaveCart.curJntCurrent[i]) > m_maxJntCurrent[i] AND ABS(i_slaveCart.curJntVel[i]) < 0.002 and m_adjustStartTime >= 2  THEN
+		IF ABS(i_slaveCart.curJntCurrent[i]) > m_maxJntCurrent[i] AND ABS(i_slaveCart.curJntVel[i]) < 0.0005 AND m_adjustStartTime >= 2  THEN
 			m_pinDeployed[i] := TRUE;
 			m_tarJntPos[i] := m_actJntPos[i];
 		END_IF
